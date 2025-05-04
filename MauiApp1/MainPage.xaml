@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.MainPage">
+    
+    <FlexLayout Direction ="Column">
+        <Button Text ="Нажми на меня" Clicked ="Button_Clicked"/>
+    
+        <Entry Placeholder ="Введите текст" TextChanged ="Entry_TextChanged"/>
+        <Label Text ="Null" x:Name ="Outputlabel"/>
+
+        <Switch Toggled ="Switch_Toggled"/>
+        <Label x:Name ="SwitchLabel" Text="Switch off"/>
+
+        <Picker x:Name="MyPicker" Title="Выберите цвет" SelectedIndexChanged ="MyPicker_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Pink</x:String>
+                <x:String>Blue</x:String>
+                <x:String>Green</x:String>
+            </Picker.Items>
+        </Picker>
+        <Label x:Name ="PickerLabel" Text="Set Colour"/>
+    </FlexLayout>
+
+</ContentPage>
