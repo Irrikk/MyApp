@@ -7,6 +7,7 @@ namespace MauiApp1;
 
 public class Node : Border, INode
 {
+    private static int _maxZ;
     private Label _label;
     private Border _titleBar;
 
@@ -128,6 +129,7 @@ public class Node : Border, INode
         Content = layout;
 
         NodeTouched = nodeTouched ?? new();
+        ZIndex = ++_maxZ;
     }
 
     public virtual Node Copy()
@@ -142,12 +144,13 @@ public class Node : Border, INode
 
     private void _OnTapped(object? sender, TappedEventArgs args)
     {
+        ZIndex = ZIndex < _maxZ ? ++_maxZ : ZIndex;
         NodeTouched.Invoke(this);
     }
 
     private void _OnPanUpdated(object? sender, PanUpdatedEventArgs args)
     {
-        if(args.StatusType == GestureStatus.Started)
+        if (args.StatusType == GestureStatus.Started)
         {
             NodeTouched.Invoke(this);
         }
@@ -155,6 +158,10 @@ public class Node : Border, INode
         {
             TranslationX += args.TotalX;
             TranslationY += args.TotalY;
+        }
+        else if (args.StatusType == GestureStatus.Completed)
+        {
+            ZIndex = ZIndex < _maxZ ? ++_maxZ : ZIndex;
         }
     }
 }
