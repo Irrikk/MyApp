@@ -6,6 +6,7 @@ namespace MauiApp1
     public interface INode
     {
         Vector2 Position { get; set; }
+        int Layer { get; set; }
         Size Size { get; set; }
         string Title { get; set; }
         Color TitleBarColor { get; set; }

@@ -27,6 +27,38 @@ public partial class MainPage : ContentPage
         n2.TitleBarColor = new(49, 94, 135, 255);
         layout.Add(n2 as IView);
 
+        Size valueSize = new(50, 20);
+
+        IntChannel inInt = new(valueSize, ValueChannelType.Input);
+        layout.Add(inInt);
+        inInt.TranslationX = 500;
+        inInt.TranslationY = 20;
+
+        IntChannel outInt = new(valueSize, ValueChannelType.Output);
+        layout.Add(outInt);
+        outInt.TranslationX = 560;
+        outInt.TranslationY = 20;
+
+        FloatChannel inFloat = new(valueSize, ValueChannelType.Input);
+        layout.Add(inFloat);
+        inFloat.TranslationX = 500;
+        inFloat.TranslationY = 40;
+
+        FloatChannel outFloat = new(valueSize, ValueChannelType.Output);
+        layout.Add(outFloat);
+        outFloat.TranslationX = 560;
+        outFloat.TranslationY = 40;
+
+        BoolChannel inBool = new(valueSize, ValueChannelType.Input);
+        layout.Add(inBool);
+        inBool.TranslationX = 500;
+        inBool.TranslationY = 60;
+
+        BoolChannel outBool = new(valueSize, ValueChannelType.Output);
+        layout.Add(outBool);
+        outBool.TranslationX = 560;
+        outBool.TranslationY = 60;
+
         Content = layout;
 
         NodeSelector nodeSelector = new(nodeTouched);
