@@ -14,7 +14,6 @@ public class MainActivity : MauiAppCompatActivity
         base.OnCreate(savedInstanceState);
         Window.SetStatusBarColor(uiFrameColor);
         Window.SetNavigationBarColor(uiFrameColor);
-        //var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
-        //toolbar.SetBackgroundColor(uiFrameColor);
+        
     }
 }
