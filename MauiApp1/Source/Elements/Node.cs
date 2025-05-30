@@ -21,6 +21,12 @@ public class Node : Border, INode
         }
     }
 
+    public int Layer
+    {
+        get => ZIndex;
+        set => ZIndex = value;
+    }
+
     public Size Size
     {
         get => new(Width, Height);
@@ -163,5 +169,5 @@ public class Node : Border, INode
         {
             ZIndex = ZIndex < _maxZ ? ++_maxZ : ZIndex;
         }
-    }
+    }  
 }
