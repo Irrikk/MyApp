@@ -8,31 +8,26 @@ namespace MauiApp1
 {
     public class NodeSelector : IDisposable
     {
-        private Event<INode> _nodeTouched;
+        private EventBus _eventBus;
 
-        public INode? CurrentNode { get; private set; }
-        public Event<INode> nodeSelected { get; private set; }
-        public Event<INode> nodeUnselected { get; private set; }
+        public Node? CurrentNode { get; private set; }
 
-        public NodeSelector(Event<INode> nodeTouched)
+        public NodeSelector(AppContext context)
         {
-            _nodeTouched = nodeTouched;
-            nodeTouched.Subscribe(_OnNodeTouched);
-
-            nodeSelected = new();
-            nodeUnselected = new();
+            _eventBus = context.EventBus;
+            _eventBus.nodeTapped.Subscribe(_OnNodeTouched);
         }
 
         public void Dispose()
         {
-            _nodeTouched.Unsubscribe(_OnNodeTouched);
+            _eventBus.nodeTapped.Unsubscribe(_OnNodeTouched);
         }
 
-        private void _OnNodeTouched(INode node)
+        private void _OnNodeTouched(Node node)
         {
-            if(CurrentNode != null) nodeUnselected.Invoke(CurrentNode);
+            if(CurrentNode != null) _eventBus.nodeUnselected.Invoke(CurrentNode);
             CurrentNode = node;
-            nodeSelected.Invoke(node);
+            _eventBus.nodeSelected.Invoke(node);
         }
     }
 }

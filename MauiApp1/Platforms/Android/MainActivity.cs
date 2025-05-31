@@ -14,6 +14,5 @@ public class MainActivity : MauiAppCompatActivity
         base.OnCreate(savedInstanceState);
         Window.SetStatusBarColor(uiFrameColor);
         Window.SetNavigationBarColor(uiFrameColor);
-        
     }
 }
