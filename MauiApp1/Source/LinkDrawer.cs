@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maui.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -9,12 +10,14 @@ namespace MauiApp1
         private Layout _rootLayout;
         private EventBus _eventBus;
         private GraphicsView _graphicsView;
+        private List<Channel> _links;
 
         public LinkDrawer(AppContext context)
         {
             _rootLayout = context.RootLayout;
             _eventBus = context.EventBus;
             _graphicsView = new();
+            _links = new();
 
             _rootLayout.Add(_graphicsView);
             _graphicsView.BackgroundColor = Colors.White;
@@ -33,91 +36,35 @@ namespace MauiApp1
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
-            throw new NotImplementedException();
+            canvas.StrokeColor = Colors.Green;
+            canvas.StrokeSize = 2;
+
+            foreach (var item in _links)
+            {
+                double fromX = item.TranslationX;
+                double fromY = item.TranslationY;
+                double toX = item.LinkedParent.TranslationX;
+                double toY = item.LinkedParent.TranslationY;
+
+                canvas.DrawLine((float)fromX, (float)fromY, (float)toX, (float)toY);
+            }
         }
 
         private void _OnNodesLinked(NodesLinkedEventArgs args)
         {
-
+            _links.Add(args.input);
+            _graphicsView.Invalidate();
         }
 
         private void _OnNodesUnlinked(NodesUnlinkedEventArgs args)
         {
-
+            _links.Remove(args.input);
+            _graphicsView.Invalidate();
         }
 
         private void _OnNodePositionChanged(NodePositionChangedArgs args)
         {
-
+            _graphicsView.Invalidate();
         }
-
-
     }
 }
-
-
-//using System;
-//using System.Collections.Generic;
-
-//namespace MauiApp1
-//{
-//    public class LinkDrawer : IDrawable
-//    {
-//        private GraphicsView _view;
-//        private List<PathF> _paths;
-//        private bool _isEnabled;
-//        private Color _strokeColor;
-//        private float _strokeSize;
-
-//        public bool IsEnabled
-//        {
-//            get => _isEnabled;
-//            set
-//            {
-//                _isEnabled = value;
-//                _view.Invalidate();
-//            }
-//        }
-
-//        public Color StrokeColor
-//        {
-//            get => _strokeColor;
-//            set
-//            {
-//                _strokeColor = value;
-//                _view.Invalidate();
-//            }
-//        }
-
-//        public float StrokeSize
-//        {
-//            get => _strokeSize;
-//            set
-//            {
-//                _strokeSize = value;
-//                _view.Invalidate();
-//            }
-//        }
-
-//        public LinkDrawer(GraphicsView view)
-//        {
-//            _view = view;
-//            _paths = new();
-//            view.Drawable = this;
-//        }
-
-//        public void Draw(ICanvas canvas, RectF dirtyRect)
-//        {
-//            if (!IsEnabled) return;
-//            canvas.StrokeColor = StrokeColor;
-//            canvas.StrokeSize = StrokeSize;
-//            for (int i = 0; i < _paths.Count; i++)
-//            {
-//                var path= _paths[i];
-//                canvas.DrawPath(path);
-//            }
-//        }
-
-//        public void AddPath(PathF path) => _paths.Add(path);
-//    }
-//}
